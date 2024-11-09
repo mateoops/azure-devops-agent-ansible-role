@@ -1,0 +1,13 @@
+- name: Check agent already exists
+  ansible.builtin.stat:
+    path: "{{ az_agent_directory }}/svc.sh"
+  become: true
+  register: agent_svc_file
+
+- name: Make is_agent_installed variable
+  ansible.builtin.set_fact:
+    is_agent_installed: "{{ agent_svc_file.stat.exists }}"
+
+- name: Stop playbook when agent is installed and reinstall flag is disabled
+  fail: msg="Agent is already installed. Use az_agent_allow_reinstall_existing_agent flag to reinstall."
+  when: is_agent_installed and not az_agent_allow_reinstall_existing_agent

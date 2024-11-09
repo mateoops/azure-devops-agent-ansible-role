@@ -1,0 +1,38 @@
+- name: Run preflight checks
+  ansible.builtin.include_tasks:
+    file: preflight.yml
+
+- name: Uninstall existing agent
+  ansible.builtin.include_tasks:
+    file: uninstall.yml
+  when: is_agent_installed
+
+- name: Create user for agent
+  ansible.builtin.user:
+    name: "{{ az_agent_user }}"
+    create_home: yes
+  become: true
+
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ az_agent_directory }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ az_agent_user }}"
+    group: "{{ az_agent_user }}"
+  become: true
+
+- name: Download and unarchive agent
+  ansible.builtin.unarchive:
+    src: "{{ az_agent_url }}"
+    dest: "{{ az_agent_directory }}"
+    owner: "{{ az_agent_user }}"
+    group: "{{ az_agent_user }}"
+    remote_src: true
+  become: true
+
+- name: Configure agent
+  ansible.builtin.command: "./config.sh"
+  become_user: "{{ az_agent_user }}"
+  args:
+    chdir: "{{ az_agent_directory }}"

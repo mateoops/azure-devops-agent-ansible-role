@@ -1,0 +1,11 @@
+- name: Uninstall agent service
+  command: "{{ az_agent_directory }}svc.sh uninstall"
+  args:
+    chdir: "{{ az_agent_directory }}"
+  become: true
+
+- name: Remove user directory
+  ansible.builtin.file:
+    path: "{{ az_agent_directory }}"
+    state: absent
+  become: true

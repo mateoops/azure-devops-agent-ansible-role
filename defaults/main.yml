@@ -1,0 +1,6 @@
+---
+# defaults file for azure-devops-agent-ansible-role
+az_agent_version: 3.246.0
+az_agent_user: az-agent
+az_agent_directory: /opt/az-agent/
+az_agent_allow_reinstall_existing_agent: false

@@ -1,0 +1,1 @@
+az_agent_url: "https://vstsagentpackage.azureedge.net/agent/{{ az_agent_version }}/vsts-agent-linux-x64-{{ az_agent_version }}.tar.gz"
