@@ -3,6 +3,7 @@
   args:
     chdir: "{{ az_agent_directory }}"
   become: true
+  ignore_errors: true
 
 - name: Remove user directory
   ansible.builtin.file:
