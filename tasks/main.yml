@@ -32,7 +32,19 @@
   become: true
 
 - name: Configure agent
-  ansible.builtin.command: "./config.sh"
+  ansible.builtin.command: "./config.sh --unattended --url {{ az_agent_server_url }} --auth pat --token {{ az_agent_pat }} --pool {{ az_agent_pool_name }}"
   become_user: "{{ az_agent_user }}"
   args:
     chdir: "{{ az_agent_directory }}"
+
+- name: Instal agent service
+  ansible.builtin.command: "./svc.sh install {{ az_agent_user }}"
+  become: true
+  args:
+    chdir: "{{ az_agent_directory }}" 
+
+- name: Start agent service
+  ansible.builtin.command: "./svc.sh start"
+  become: true
+  args:
+    chdir: "{{ az_agent_directory }}" 
