@@ -1,5 +1,6 @@
 Ansible Role: Azure Devops (Pipeline) agent install
 =========
+![Ansible Role](https://img.shields.io/ansible/role/d/mateoops/azure-devops-agent-ansible-role)
 
 Role install and configure Azure Devops Pipeline agent on Linux machines.
 
